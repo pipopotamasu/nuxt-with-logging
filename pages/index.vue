@@ -1,39 +1,30 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        nuxt-with-logging
-      </h1>
-      <h2 class="subtitle">
-        My legendary Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <h1>ユーザ一覧</h1>
+    <ul>
+      <li v-for="(user, i) in users" :key="i">
+        <nuxt-link to='/show' >
+          {{ user.name }}
+        </nuxt-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import axios from 'axios'
 
 export default {
-  components: {
-    Logo
+
+  data () {
+    return {
+      users: []
+    }
+  },
+  async asyncData ({ params }) {
+    const res = await axios.get('https://qiita.com/api/v2/users');
+    console.log(res)
+    return { users: res.data }
   }
 }
 </script>
