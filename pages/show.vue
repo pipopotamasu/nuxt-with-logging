@@ -6,17 +6,19 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   data () {
     return {
       user: {}
     }
   },
-  async asyncData ({ params }) {
-    const res = await axios.get('https://qiita.com/api/v2/users');
-    return { user: res.data[0] }
+  async asyncData ({ $axios }) {
+    try {
+      const res = await $axios.$get('https://qiita.com/api/v2/users');
+      return { user: res.data[0] }
+    } catch (err) {
+
+    }
   }
 }
 </script>

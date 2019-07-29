@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>ユーザ一覧</h1>
+    <h1><nuxt-link to='/show' >ユーザ一覧</nuxt-link></h1>
     <ul>
       <li v-for="(user, i) in users" :key="i">
         <nuxt-link to='/show' >
@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
 
   data () {
@@ -21,10 +19,14 @@ export default {
       users: []
     }
   },
-  async asyncData ({ params }) {
-    const res = await axios.get('https://qiita.com/api/v2/users');
-    console.log(res)
-    return { users: res.data }
+  async asyncData ({ $axios }) {
+    try {
+      const res = await $axios.$get('https://qiita.com/api/v2/users');
+      // console.log(res)
+      return { users: res.data }
+    } catch (err) {
+
+    }
   }
 }
 </script>
